@@ -10,6 +10,11 @@ body {
 
 body {
   overscroll-behavior: none;
+  overflow-x: hidden;
+}
+
+canvas {
+  display: block;
 }
 
 main > :first-child {
@@ -22,4 +27,111 @@ main > :last-child {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+@media (max-width: 640px) {
+  header > div.h-16 {
+    gap: 0.5rem;
+    padding-inline: 1rem;
+  }
+
+  header > div.h-16 > div:first-child {
+    min-width: 0;
+    gap: 0.625rem;
+  }
+
+  header > div.h-16 > div:first-child > a {
+    min-width: 0;
+  }
+
+  header > div.h-16 > div:last-child {
+    flex-shrink: 0;
+    gap: 0.5rem;
+  }
+
+  header > div.h-16 > div:last-child > div {
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+
+  main > div > section.relative {
+    box-sizing: border-box;
+    flex: none;
+    height: auto;
+    min-height: max-content;
+    gap: 1.5rem;
+    padding: 1rem 1rem 5rem;
+  }
+
+  main > div {
+    flex: none;
+  }
+
+  main > div > section.relative > div:first-child {
+    padding-inline: 0;
+  }
+
+  main > div > section.relative > div:nth-child(2) {
+    box-sizing: border-box;
+    width: 100%;
+    padding-inline: 0.25rem;
+  }
+
+  main > div > section.relative h1.font-headline-xl {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+
+  main > div > section.relative > div:nth-child(2) > p.font-body-lg {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  main > div > section.relative > div:nth-child(2) > div:nth-of-type(1) > span {
+    line-height: 1.5;
+  }
+
+  main > div > section.relative > div:nth-child(2) > div:nth-of-type(2) {
+    margin-top: 1.25rem;
+  }
+
+  main > div > section.relative > div:nth-child(2) > div:nth-of-type(2) > button {
+    justify-content: center;
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  main > div > section.relative > div:nth-child(2) > div:nth-of-type(3) {
+    margin-top: 1.25rem;
+    padding-inline: 0;
+  }
+
+  main > div > section.relative > div.fixed {
+    right: 0.75rem;
+    bottom: 4.5rem;
+  }
+
+  footer > div.px-margin-lg {
+    padding-inline: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 380px) {
+  header > div.h-16 > div:last-child > div {
+    display: none;
+  }
+
+  main > div > section.relative > div:first-child > div:first-child {
+    gap: 0.375rem;
+    padding-inline: 0.625rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  main > div > section.relative {
+    height: auto;
+    min-height: max-content;
+  }
 }
