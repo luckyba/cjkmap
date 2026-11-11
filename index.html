@@ -1,0 +1,299 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>CJKmap — Explore Hanzi, Kanji &amp; Hangul in 3D</title>
+<meta name="description" content="Explore Chinese Hanzi, Japanese Kanji, and Korean Hangul in an interactive 3D linguistic map.">
+<meta name="keywords" content="CJK, Hanzi, Kanji, Hangul, Chinese, Japanese, Korean, language map, 3D">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#06080F">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CJKmap">
+<meta property="og:title" content="CJKmap — Explore Hanzi, Kanji &amp; Hangul in 3D">
+<meta property="og:description" content="Explore Chinese Hanzi, Japanese Kanji, and Korean Hangul in an interactive 3D linguistic map.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CJKmap — Explore Hanzi, Kanji &amp; Hangul in 3D">
+<meta name="twitter:description" content="Explore Chinese Hanzi, Japanese Kanji, and Korean Hangul in an interactive 3D linguistic map.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "CJKmap",
+  "description": "Explore Chinese Hanzi, Japanese Kanji, and Korean Hangul in an interactive 3D linguistic map.",
+  "inLanguage": "en"
+}
+</script><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><link rel="stylesheet" href="/src/style.css"></head><body class="bg-[#06080F] text-on-surface font-body-md text-body-md min-h-screen selection:bg-primary-container selection:text-on-primary-container relative overflow-x-hidden">
+<!-- 3D Three.js Full Background Scene -->
+<!-- STITCH_THREEJS_START:ANIMATION_5 class="fixed inset-0 w-full h-full pointer-events-none z-0" -->
+<div class="fixed inset-0 w-full h-full pointer-events-none z-0" style="display:block;">
+
+<div id="threejs-container-ANIMATION_5" style="width:100%;height:100%"></div>
+<script type="module">
+import * as THREE from 'three';
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_5');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Three.js Interactive 3D CJK Ideograph Cosmos & Particle Matrix
+const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x06080F, 0.0018);
+
+const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 2000);
+camera.position.set(0, 20, 260);
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+container.appendChild(renderer.domElement);
+
+// Create CJK character textures dynamically on canvases
+const cjkCharacters = [
+  // China (Hanzi): 道 (Tao), 天 (Heaven), 宙 (Cosmos), 龍 (Dragon), 墨 (Ink), 靈 (Spirit), 宇 (Space)
+  { char: '道', culture: 'CN', color: '#00F2FE' },
+  { char: '天', culture: 'CN', color: '#4FACFE' },
+  { char: '宙', culture: 'CN', color: '#00F2FE' },
+  { char: '龍', culture: 'CN', color: '#FFB800' },
+  { char: '墨', culture: 'CN', color: '#38EF7D' },
+  { char: '靈', culture: 'CN', color: '#00F2FE' },
+  { char: '宇', culture: 'CN', color: '#70A1FF' },
+  // Japan (Kanji / Kana): 夢 (Dream), 響 (Echo), 桜 (Sakura), 光 (Light), 風 (Wind), 絆 (Bond)
+  { char: '夢', culture: 'JP', color: '#FF3B5C' },
+  { char: '響', culture: 'JP', color: '#FF758C' },
+  { char: '光', culture: 'JP', color: '#FFD700' },
+  { char: '風', culture: 'JP', color: '#05FFA1' },
+  { char: '絆', culture: 'JP', color: '#FF3B5C' },
+  { char: '星', culture: 'JP', color: '#FFB800' },
+  // Korea (Hanja / Hangul): 별 (Star), 빛 (Gleam), 우 (Universe), 훈 (Script), 혼 (Soul)
+  { char: '별', culture: 'KR', color: '#A18CD1' },
+  { char: '빛', culture: 'KR', color: '#38F9D7' },
+  { char: '훈', culture: 'KR', color: '#00F2FE' },
+  { char: '혼', culture: 'KR', color: '#FEE140' },
+  { char: '한', culture: 'KR', color: '#FA709A' },
+  { char: '세', culture: 'KR', color: '#05FFA1' }
+];
+
+function createTextTexture(char, textColor, glowColor) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 128;
+  const ctx = canvas.getContext('2d');
+  
+  // Radial subtle glow
+  const grad = ctx.createRadialGradient(64, 64, 10, 64, 64, 60);
+  grad.addColorStop(0, 'rgba(255, 255, 255, 0.18)');
+  grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 128, 128);
+
+  ctx.font = 'bold 62px "Noto Serif SC", "Noto Sans JP", "Noto Sans KR", serif, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  
+  ctx.shadowColor = glowColor || textColor;
+  ctx.shadowBlur = 18;
+  ctx.fillStyle = textColor;
+  ctx.fillText(char, 64, 64);
+  
+  // Inner core highlight
+  ctx.shadowBlur = 4;
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillText(char, 64, 64);
+  
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+  return texture;
+}
+
+// Group to hold all cosmos elements
+const cosmosGroup = new THREE.Group();
+scene.add(cosmosGroup);
+
+// 1. Armillary Rings
+const ringsGroup = new THREE.Group();
+cosmosGroup.add(ringsGroup);
+
+const ringMatCyan = new THREE.MeshBasicMaterial({ color: 0x00F2FE, wireframe: true, transparent: true, opacity: 0.45 });
+const ringMatGold = new THREE.MeshBasicMaterial({ color: 0xFFB800, wireframe: true, transparent: true, opacity: 0.4 });
+const ringMatCrimson = new THREE.MeshBasicMaterial({ color: 0xFF3B5C, wireframe: true, transparent: true, opacity: 0.35 });
+
+const ring1 = new THREE.Mesh(new THREE.TorusGeometry(58, 0.7, 8, 80), ringMatCyan);
+const ring2 = new THREE.Mesh(new THREE.TorusGeometry(76, 0.6, 8, 80), ringMatGold);
+ring2.rotation.x = Math.PI / 3;
+const ring3 = new THREE.Mesh(new THREE.TorusGeometry(94, 0.5, 8, 80), ringMatCrimson);
+ring3.rotation.y = Math.PI / 4;
+ring3.rotation.x = -Math.PI / 6;
+
+ringsGroup.add(ring1);
+ringsGroup.add(ring2);
+ringsGroup.add(ring3);
+
+// 2. Central Radiant Core
+const coreGeo = new THREE.SphereGeometry(15, 32, 32);
+const coreMat = new THREE.MeshBasicMaterial({
+  color: 0x00F2FE,
+  wireframe: true,
+  transparent: true,
+  opacity: 0.85
+});
+const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+ringsGroup.add(coreMesh);
+
+// 3. Floating CJK Glyph Sprites
+const glyphSprites = [];
+const glyphData = [];
+
+cjkCharacters.forEach((item, i) => {
+  const texture = createTextTexture(item.char, item.color, item.color);
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    opacity: 0.95,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  
+  const sprite = new THREE.Sprite(material);
+  const radius = 65 + (i % 5) * 30 + Math.random() * 20;
+  const angle = (i / cjkCharacters.length) * Math.PI * 2 * 2.2 + (Math.random() * 0.4);
+  const elevation = (Math.sin(i * 1.3) * 65) + (Math.random() - 0.5) * 30;
+  
+  sprite.position.x = Math.cos(angle) * radius;
+  sprite.position.y = elevation;
+  sprite.position.z = Math.sin(angle) * radius;
+  
+  const scale = 22 + Math.random() * 8;
+  sprite.scale.set(scale, scale, 1);
+  
+  cosmosGroup.add(sprite);
+  glyphSprites.push(sprite);
+  glyphData.push({
+    radius: radius,
+    angle: angle,
+    speed: 0.003 + (Math.random() * 0.004),
+    initialY: elevation,
+    floatOffset: Math.random() * Math.PI * 2
+  });
+});
+
+// 4. Stardust Particles
+const starCount = 2000;
+const starGeometry = new THREE.BufferGeometry();
+const starPositions = new Float32Array(starCount * 3);
+const starColors = new Float32Array(starCount * 3);
+
+const colorPalette = [
+  new THREE.Color(0x00F2FE),
+  new THREE.Color(0xFF3B5C),
+  new THREE.Color(0xFFB800),
+  new THREE.Color(0x05FFA1),
+  new THREE.Color(0x6A82FB)
+];
+
+for (let i = 0; i < starCount; i++) {
+  const r = 40 + Math.random() * 340;
+  const theta = Math.random() * Math.PI * 2;
+  const phi = (Math.random() - 0.5) * Math.PI * 0.9;
+  
+  starPositions[i * 3] = r * Math.cos(phi) * Math.cos(theta);
+  starPositions[i * 3 + 1] = r * Math.sin(phi) + (Math.sin(theta * 3) * 15);
+  starPositions[i * 3 + 2] = r * Math.cos(phi) * Math.sin(theta);
+  
+  const c = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+  starColors[i * 3] = c.r;
+  starColors[i * 3 + 1] = c.g;
+  starColors[i * 3 + 2] = c.b;
+}
+
+starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+
+const starMaterial = new THREE.PointsMaterial({
+  size: 2.2,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.85,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false
+});
+
+const starField = new THREE.Points(starGeometry, starMaterial);
+cosmosGroup.add(starField);
+
+// Mouse interaction (Parallax Glide)
+let mouseX = 0;
+let mouseY = 0;
+let targetX = 0;
+let targetY = 0;
+const windowHalfX = window.innerWidth / 2;
+const windowHalfY = window.innerHeight / 2;
+
+function onMouseMove(event) {
+  mouseX = (event.clientX - windowHalfX) * 0.45;
+  mouseY = (event.clientY - windowHalfY) * 0.4;
+}
+window.addEventListener('mousemove', onMouseMove, { passive: true });
+
+function onWindowResize() {
+  const w = container.clientWidth || window.innerWidth;
+  const h = container.clientHeight || window.innerHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
+window.addEventListener('resize', onWindowResize);
+
+let clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const elapsed = clock.getElapsedTime();
+  
+  targetX += (mouseX - targetX) * 0.04;
+  targetY += (mouseY - targetY) * 0.04;
+  camera.position.x = targetX;
+  camera.position.y = 20 - targetY * 0.6;
+  camera.lookAt(0, 0, 0);
+
+  cosmosGroup.rotation.y = elapsed * 0.07;
+  
+  ringsGroup.rotation.x = elapsed * 0.12;
+  ringsGroup.rotation.y = elapsed * 0.18;
+  ringsGroup.rotation.z = elapsed * 0.08;
+  
+  coreMesh.rotation.y = -elapsed * 0.3;
+  coreMesh.rotation.x = elapsed * 0.15;
+
+  glyphSprites.forEach((sprite, idx) => {
+    const data = glyphData[idx];
+    data.angle += data.speed;
+    sprite.position.x = Math.cos(data.angle) * data.radius;
+    sprite.position.z = Math.sin(data.angle) * data.radius;
+    sprite.position.y = data.initialY + Math.sin(elapsed * 2 + data.floatOffset) * 6;
+  });
+
+  starField.rotation.y = elapsed * 0.015;
+  starField.rotation.x = Math.sin(elapsed * 0.05) * 0.04;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_5 -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#06080F]/60 backdrop-blur-xl border-b border-outline-variant/20"><div class="h-16 w-full px-margin-lg flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm group" data-path="vu-tru-3d" href="#"><div class="w-8 h-8 rounded-DEFAULT bg-surface-container-high/80 border border-outline-variant/30 flex items-center justify-center relative"><span class="font-headline-sm text-headline-sm text-primary group-hover:text-primary-container transition-colors">文</span></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-bold">CJKmap</span><span class="font-label-sm text-label-sm text-primary-container">.com</span></div><span class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest font-mono">CJK 3D LINGUISTIC MAP</span></div></a></div><div class="flex items-center gap-space-md"><div class="flex items-center bg-surface-container-lowest/80 border border-outline-variant/30 rounded-DEFAULT px-space-sm py-space-xs gap-space-xs" role="region" aria-label="Language scope"><span class="material-symbols-outlined text-[14px] text-primary-container">language</span><span class="font-label-md text-label-md text-on-surface tracking-wide font-mono">EN · 中 · 日 · 韓</span></div><button class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-DEFAULT bg-surface-container-lowest/80 hover:bg-surface-container-high border border-outline-variant/30 text-on-surface hover:text-primary transition-all cursor-pointer" id="header-fullscreen-btn" onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen();}else{document.exitFullscreen();}" title="Fullscreen" aria-label="Toggle Fullscreen Viewport"><span class="material-symbols-outlined text-[16px] text-primary-container" id="header-fs-icon">fullscreen</span><span class="font-label-sm text-label-sm uppercase tracking-wider hidden sm:inline" id="header-fs-text">Fullscreen</span></button></div></div></header>
+<main class="relative z-10 w-full pt-16 min-h-[calc(100vh-64px)] flex flex-col justify-between"><div class="flex flex-col w-full relative selection:bg-primary-container selection:text-on-primary-container">
+<!-- ==========================================
+       SECTION 1: HERO / 3D COSMOS VIEWPORT
+       ========================================== -->
+<section class="relative w-full h-[calc(100vh-64px)] min-h-[640px] flex flex-col justify-between py-space-lg"><div class="w-full px-margin-lg my-auto flex flex-col items-center text-center max-w-4xl mx-auto pointer-events-none"><h1 class="font-headline-xl text-headline-xl text-primary tracking-tight uppercase max-w-3xl drop-shadow-[0_4px_30px_rgba(0,242,254,0.35)]">CJK LINGUISTIC MAP</h1><p class="font-body-lg text-body-lg text-on-surface-variant mt-space-md max-w-2xl leading-relaxed">Hanzi • Kanji • Hangul in 3D Space</p><div class="flex items-center justify-center gap-space-xs mt-space-xs"><span class="font-label-sm text-[11px] text-primary/70 tracking-widest font-mono uppercase bg-surface-container-high/60 px-space-sm py-[2px] rounded-DEFAULT border border-outline-variant/30">Chinese (Hanzi) · Japanese (Kanji) · Korean (Hangul)</span></div><div class="flex flex-wrap items-center justify-center gap-space-md mt-space-xl pointer-events-auto"><button class="flex items-center gap-space-sm px-space-xl py-space-sm rounded-DEFAULT bg-primary-container/90 text-on-primary font-headline-sm text-headline-sm font-bold border border-primary-container shadow-[0_0_24px_rgba(0,242,254,0.45)] hover:shadow-[0_0_36px_rgba(0,242,254,0.7)] hover:bg-primary-container transition-all cursor-pointer backdrop-blur-md" onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(err=&gt;{});}else{document.exitFullscreen();}"><span class="material-symbols-outlined text-[20px]">view_in_ar</span><span>EXPLORE 3D MAP</span></button></div><div class="grid grid-cols-1 md:grid-cols-3 gap-space-md w-full max-w-4xl mt-space-lg pointer-events-auto px-space-sm"><div class="relative flex flex-col items-center justify-center p-space-md rounded-DEFAULT bg-[#06080F]/60 backdrop-blur-xl border border-outline-variant/30 opacity-60 cursor-not-allowed select-none transition-all"><div class="flex items-center gap-space-xs mb-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span><span class="font-label-sm text-[10px] text-on-surface-variant tracking-widest font-mono uppercase">GATEWAY 01</span><span class="font-label-sm text-[9px] px-space-xs py-[1px] rounded-DEFAULT bg-surface-container-high/80 text-outline tracking-wider font-mono uppercase ml-1 border border-outline-variant/30">OFFLINE</span></div><div class="flex items-center gap-space-xs"><span class="text-[24px] font-bold text-on-surface-variant">汉</span><span class="font-headline-sm text-headline-sm text-on-surface-variant font-bold tracking-tight">HANZI MAP</span></div><span class="font-body-sm text-[12px] text-outline-variant mt-1 font-mono">Chinese · 中文 · 汉字矩阵 · ZH</span><span class="font-label-sm text-[11px] text-outline mt-space-xs font-mono flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">lock</span>hanzi.cjkmap.com (coming soon)</span></div><a href="https://kanji.cjkmap.com" target="_blank" class="group relative flex flex-col items-center justify-center p-space-md rounded-DEFAULT bg-[#06080F]/90 backdrop-blur-xl border border-secondary hover:border-secondary-fixed shadow-[0_0_24px_rgba(255,179,182,0.25)] hover:shadow-[0_0_36px_rgba(255,179,182,0.5)] transition-all cursor-pointer"><div class="flex items-center gap-space-xs mb-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-[10px] text-secondary tracking-widest font-mono uppercase">GATEWAY 02</span><span class="font-label-sm text-[9px] px-space-xs py-[1px] rounded-DEFAULT bg-secondary-container/40 text-secondary-fixed tracking-wider font-mono uppercase ml-1 border border-secondary/40 flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-secondary animate-ping"></span>ONLINE</span></div><div class="flex items-center gap-space-xs"><span class="text-[24px] font-bold text-secondary group-hover:scale-110 transition-transform">漢</span><span class="font-headline-sm text-headline-sm text-secondary-fixed font-bold tracking-tight">KANJI MAP</span></div><span class="font-body-sm text-[12px] text-on-surface-variant mt-1 font-mono">Japanese · 日本語 · 漢字空間 · JA</span><span class="font-label-sm text-[11px] text-secondary mt-space-xs font-mono group-hover:text-secondary-fixed transition-colors flex items-center gap-1">kanji.cjkmap.com <span class="material-symbols-outlined text-[14px]">north_east</span></span></a><div class="relative flex flex-col items-center justify-center p-space-md rounded-DEFAULT bg-[#06080F]/60 backdrop-blur-xl border border-outline-variant/30 opacity-60 cursor-not-allowed select-none transition-all"><div class="flex items-center gap-space-xs mb-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span><span class="font-label-sm text-[10px] text-on-surface-variant tracking-widest font-mono uppercase">GATEWAY 03</span><span class="font-label-sm text-[9px] px-space-xs py-[1px] rounded-DEFAULT bg-surface-container-high/80 text-outline tracking-wider font-mono uppercase ml-1 border border-outline-variant/30">OFFLINE</span></div><div class="flex items-center gap-space-xs"><span class="text-[24px] font-bold text-on-surface-variant">글</span><span class="font-headline-sm text-headline-sm text-on-surface-variant font-bold tracking-tight">HANGUL MAP</span></div><span class="font-body-sm text-[12px] text-outline-variant mt-1 font-mono">Korean · 한국어 · 한글궤도 · KO</span><span class="font-label-sm text-[11px] text-outline mt-space-xs font-mono flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">lock</span>hangul.cjkmap.com (coming soon)</span></div></div></div><div class="fixed bottom-14 sm:bottom-12 right-6 sm:right-8 z-50 flex flex-col items-end gap-space-xs pointer-events-auto"><div class="flex items-center gap-space-xs p-space-xs rounded-DEFAULT bg-[#06080F]/90 backdrop-blur-xl border border-outline-variant/30 shadow-[0_0_24px_rgba(0,242,254,0.25)]"><button class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-DEFAULT bg-primary-container/20 text-primary-container hover:bg-primary-container hover:text-on-primary transition-all cursor-pointer group" id="hud-fullscreen-btn" onclick="if(!document.fullscreenElement){document.documentElement.requestFullscreen();}else{document.exitFullscreen();}"><span class="material-symbols-outlined text-[18px] transition-transform group-hover:scale-110" id="hud-fs-icon">fullscreen</span><span class="font-label-sm text-label-sm font-bold tracking-wider" id="hud-fs-label">FULLSCREEN</span></button><button class="p-space-xs rounded-DEFAULT bg-surface-container-high/80 hover:bg-surface-container-highest text-on-surface hover:text-primary-container transition-all cursor-pointer" onclick="alert('Restoring default galaxy perspective [Vector 0, 20, 260]');" title="Reset Camera View"><span class="material-symbols-outlined text-[18px]">restart_alt</span></button><button class="p-space-xs rounded-DEFAULT bg-surface-container-high/80 hover:bg-surface-container-highest text-on-surface hover:text-primary-container transition-all cursor-pointer" onclick="alert('Toggle 3D CJK Orbit Auto-rotation');" title="Auto-Rotate Orbit"><span class="material-symbols-outlined text-[18px]">sync</span></button></div></div></section>
+</div>
+</main>
+<footer class="relative z-10 w-full bg-[#06080F]/80 backdrop-blur-xl border-t border-outline-variant/20"><div class="w-full px-margin-lg py-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm"><div class="w-full flex items-center justify-center"><div class="font-label-sm text-label-sm text-on-surface-variant font-mono">© 2024 CJKmap.com</div></div></div></footer>
+<script>(function initFullscreenObserver(){function updateIcons(){var isFs=!!document.fullscreenElement;var hudIcon=document.getElementById('hud-fs-icon');var hudLabel=document.getElementById('hud-fs-label');var headerIcon=document.getElementById('header-fs-icon');var headerText=document.getElementById('header-fs-text');if(hudIcon)hudIcon.textContent=isFs?'fullscreen_exit':'fullscreen';if(hudLabel)hudLabel.textContent=isFs?'THU NHỎ':'TOÀN MÀN HÌNH';if(headerIcon)headerIcon.textContent=isFs?'fullscreen_exit':'fullscreen';if(headerText)headerText.textContent=isFs?'Thu nhỏ':'Toàn màn hình';}document.addEventListener('fullscreenchange',updateIcons);document.addEventListener('webkitfullscreenchange',updateIcons);document.addEventListener('mozfullscreenchange',updateIcons);})();</script>
+
+</body></html>
