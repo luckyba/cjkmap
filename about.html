@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="canonical" href="https://cjkmap.com/about.html">
+    <title>About CJKmap | Chinese, Japanese &amp; Korean Map</title>
+    <meta name="description" content="Learn about CJKmap, a visual project for exploring Chinese Hanzi, Japanese Kanji, and Korean Hangul.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#06080F">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CJKmap">
+    <meta property="og:url" content="https://cjkmap.com/about.html">
+    <meta property="og:title" content="About CJKmap | Chinese, Japanese &amp; Korean Map">
+    <meta property="og:description" content="Learn about CJKmap, a visual project for exploring Chinese Hanzi, Japanese Kanji, and Korean Hangul.">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="About CJKmap | Chinese, Japanese &amp; Korean Map">
+    <meta name="twitter:description" content="Learn about CJKmap, a visual project for exploring Chinese Hanzi, Japanese Kanji, and Korean Hangul.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+    <style>
+      .about-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        color: #e1e2ed;
+        background: #06080f;
+        font-family: Geist, sans-serif;
+      }
+
+      .about-header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        border-bottom: 1px solid rgb(58 73 75 / 40%);
+        background: rgb(6 8 15 / 80%);
+        backdrop-filter: blur(20px);
+      }
+
+      .about-header-inner,
+      .about-footer-inner {
+        width: min(100% - 3rem, 80rem);
+        min-height: 4rem;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .about-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #e0fdff;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.125rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .about-mark {
+        width: 2rem;
+        height: 2rem;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgb(58 73 75 / 60%);
+        border-radius: 0.125rem;
+        background: #272a32;
+        color: #00dce6;
+      }
+
+      .about-nav,
+      .about-footer-link {
+        color: #b9cacb;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.6875rem;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .about-main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding: 5rem 1.5rem;
+      }
+
+      .about-content {
+        width: min(100%, 56rem);
+        margin: 0 auto;
+      }
+
+      .about-eyebrow {
+        margin: 0 0 1rem;
+        color: #00dce6;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.6875rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .about-content h1 {
+        max-width: 48rem;
+        margin: 0;
+        color: #e0fdff;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(2.125rem, 6vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+      }
+
+      .about-copy {
+        max-width: 42rem;
+        margin: 1.5rem 0 0;
+        color: #b9cacb;
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .about-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+        padding: 0.875rem 1rem;
+        border: 1px solid #ffb3b6;
+        border-radius: 0.125rem;
+        color: #ffdada;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        transition: background-color 150ms ease, border-color 150ms ease;
+      }
+
+      .about-cta:hover,
+      .about-nav:hover,
+      .about-footer-link:hover {
+        border-color: #ffdada;
+        color: #ffdada;
+      }
+
+      .about-footer {
+        border-top: 1px solid rgb(58 73 75 / 40%);
+        background: rgb(6 8 15 / 80%);
+      }
+
+      .about-footer-inner {
+        min-height: 3.5rem;
+      }
+
+      @media (max-width: 640px) {
+        .about-header-inner,
+        .about-footer-inner {
+          width: calc(100% - 2rem);
+        }
+
+        .about-main {
+          padding: 4rem 1rem;
+        }
+
+        .about-copy {
+          font-size: 0.9375rem;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About CJKmap",
+        "url": "https://cjkmap.com/about.html",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "CJKmap",
+          "url": "https://cjkmap.com/"
+        }
+      }
+    </script>
+  </head>
+  <body class="about-page">
+    <header class="about-header">
+      <div class="about-header-inner">
+        <a class="about-brand" href="/" aria-label="CJKmap home">
+          <span class="about-mark" aria-hidden="true">文</span>
+          <span>CJKmap</span>
+        </a>
+        <a class="about-nav" href="/">Map</a>
+      </div>
+    </header>
+    <main class="about-main">
+      <article class="about-content">
+        <p class="about-eyebrow">About CJKmap</p>
+        <h1>A visual map for Chinese, Japanese, and Korean.</h1>
+        <p class="about-copy">CJKmap brings together maps for Chinese Hanzi, Japanese Kanji, and Korean Hangul, making it easier to explore each language's writing system.</p>
+        <p class="about-copy">The Kanji Map is available now. Hanzi and Hangul maps are still in development.</p>
+        <a class="about-cta" href="https://kanji.cjkmap.com" target="_blank" rel="noopener noreferrer">
+          Explore Kanji Map
+          <span aria-hidden="true">↗</span>
+        </a>
+      </article>
+    </main>
+    <footer class="about-footer">
+      <div class="about-footer-inner">
+        <span class="about-footer-link">© <time id="copyright-year">2026</time> CJKmap.com</span>
+        <a class="about-footer-link" href="/">Home</a>
+      </div>
+    </footer>
+    <script>
+      document.getElementById("copyright-year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

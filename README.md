@@ -1,35 +1,38 @@
-# CJKmap landing page
+# CJKmap
 
-Static Vite site prepared for Cloudflare Pages.
+### Chinese · Japanese · Korean Map
 
-## Local development
+CJKmap is a visual hub for exploring Chinese, Japanese, and Korean writing systems through interactive maps. The Kanji Link Map is available now; the Hanzi and Hangul map destinations are coming soon.
+
+## Kanji Link Map
+
+[Open Kanji Link Map →](https://kanji.cjkmap.com)
+
+Browse 1,026 school-grade kanji, search by character or meaning, and explore connections through compound and kanji-chain views. The map also includes 2D and 3D views, readings, meanings, vocabulary, and practice progress.
+
+### Desktop
+
+<a href="https://kanji.cjkmap.com">
+  <img src="./screenshots/kanji-link-map-desktop.png" alt="Desktop view of Kanji Link Map with the kanji graph and details panel" width="100%">
+</a>
+
+### Mobile
+
+<a href="https://kanji.cjkmap.com">
+  <img src="./screenshots/kanji-link-map.png" alt="Mobile view of Kanji Link Map showing connected kanji and vocabulary" width="390">
+</a>
+
+## About this repository
+
+This repository contains the CJKmap landing page, a static site built with Vite and Three.js.
+
+## Run locally
 
 Requires Node.js 20.19+ or 22.12+.
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
-## Production build
-
-```sh
-npm run build
-npm run preview
-```
-
-Vite writes the deployable static site to `dist/`.
-
-## Deploy to Cloudflare Pages
-
-1. Push this project to a GitHub or GitLab repository.
-2. In Cloudflare, choose **Workers & Pages → Create → Pages → Connect to Git**.
-3. Use these build settings:
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Root directory: `/`
-4. Deploy. Subsequent pushes to the production branch deploy automatically; other branches get preview deployments.
-
-This landing page is static and needs no Workers, database, or environment variables.
-
-The page includes a title, description, social sharing metadata, structured data, a favicon, and `robots.txt`. Once a production domain is attached, add its canonical URL and sitemap URL to the page; they are intentionally omitted until the domain is known.
+Create a production build with `npm run build`; Vite writes it to `dist/`.
